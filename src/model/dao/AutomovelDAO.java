@@ -1,27 +1,33 @@
 package model.dao;
 
+import java.util.List;
+
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import javax.persistence.Query;
+
 import model.entity.Automovel;
 import model.util.JPAUtil;
 
 public class AutomovelDAO {
 
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub	
-		
-		EntityManager em = JPAUtil.getEntityManager();
-		
-		Automovel auto = new Automovel();
-		auto.setAnoFabricacao(2010);
-		auto.setModelo("Ferrari");
-		auto.setObservacoes("Nunca foi batido");
+	
+	public void insereAuto(Automovel auto) {
+		EntityManager em = JPAUtil.getEntityManager();		
 		EntityTransaction tx = em.getTransaction();
 		tx.begin();
 		em.persist(auto);
 		tx.commit();
-		em.close();	
-
+		em.close();
 	}
+	
+	public List<Automovel> listaAutos() {		
+		EntityManager em = JPAUtil.getEntityManager();
+		Query q = em.createQuery("select a from Automovel a", Automovel.class);
+		List<Automovel> autos = q.getResultList();
+		em.close();		
+		return autos;
+	}	
+	
 
 }
