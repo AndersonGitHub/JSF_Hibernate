@@ -21,6 +21,7 @@ public class AutomovelDAO {
 		em.close();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public List<Automovel> listaAutos() {		
 		EntityManager em = JPAUtil.getEntityManager();
 		Query q = em.createQuery("select a from Automovel a", Automovel.class);
